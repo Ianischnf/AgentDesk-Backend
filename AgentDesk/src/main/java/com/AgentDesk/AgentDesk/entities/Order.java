@@ -5,32 +5,32 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "commande")
-public class Commande {
+@Table(name = "order")
+public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private int orderId;
 
     private String nomClient;
     private String description;
     private OrderStatut statut;
     private LocalDateTime createdAt;
 
-    public Commande(String nomClient, String description, OrderStatut statut, LocalDateTime createdAt) {
+    public Order(String nomClient, String description, OrderStatut statut, LocalDateTime createdAt) {
         this.nomClient      = nomClient;
         this.description    = description;
         this.statut         = statut;
         this.createdAt      = createdAt;
     }
 
-    public Commande(){}
+    public Order(){}
 
     public int getId() {
-        return id;
+        return orderId;
     }
 
     public void setId(int id) {
-        this.id = id;
+        this.orderId = id;
     }
 
     public String getNomClient() {

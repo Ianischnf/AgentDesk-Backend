@@ -2,7 +2,7 @@ package com.AgentDesk.AgentDesk.services;
 
 import com.AgentDesk.AgentDesk.dto.OrderRequestDTO;
 import com.AgentDesk.AgentDesk.dto.OrderResponseDTO;
-import com.AgentDesk.AgentDesk.entities.Commande;
+import com.AgentDesk.AgentDesk.entities.Order;
 import com.AgentDesk.AgentDesk.enums.OrderStatut;
 import com.AgentDesk.AgentDesk.repositories.CommandeRepository;
 import org.springframework.stereotype.Service;
@@ -20,14 +20,14 @@ public class OrderService {
     }
 
     public OrderResponseDTO createOrder(OrderRequestDTO CommandeDTO) {
-        Commande newOrder = new Commande();
+        Order newOrder = new Order();
 
         newOrder.setNomClient(CommandeDTO.nomClient());
         newOrder.setDescription(CommandeDTO.description());
         newOrder.setStatut(OrderStatut.EN_ATTENTE);
         newOrder.setCreatedAt(LocalDateTime.now());
 
-        Commande saveOrder = commandeRepository.save(newOrder);
+        Order saveOrder = commandeRepository.save(newOrder);
 
         return new OrderResponseDTO(
                 saveOrder.getId(),
@@ -40,7 +40,7 @@ public class OrderService {
     }
 
     public List<OrderResponseDTO> fetchAllOrder() {
-        List<Commande> ListOrder = commandeRepository.findAll();
+        List<Order> ListOrder = commandeRepository.findAll();
 
         List<OrderResponseDTO> TransformToDTO = ListOrder.stream()
                 .map(o -> new OrderResponseDTO(
@@ -55,7 +55,7 @@ public class OrderService {
     }
 
     public OrderResponseDTO updateOrder(Long id, OrderRequestDTO OrderUpdated) {
-        Commande ExistingOrder = commandeRepository.findById(id)
+        Order ExistingOrder = commandeRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Commande introuvable"));
 
         ExistingOrder.setNomClient(OrderUpdated.nomClient());
@@ -74,7 +74,7 @@ public class OrderService {
     }
 
     public void deleteOrder(Long id) {
-        Commande orderToDelete = commandeRepository.findById(id)
+        Order orderToDelete = commandeRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Commande introuvable"));
 
         commandeRepository.delete(orderToDelete);
